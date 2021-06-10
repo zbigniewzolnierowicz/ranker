@@ -13,17 +13,17 @@ defmodule RankerWeb.Router do
     plug :accepts, ["json"]
   end
 
-  # scope "/", RankerWeb do
-  #   pipe_through :browser
-
-  #   get "/", PageController, :index
-  # end
-
   # Other scopes may use custom stacks.
   scope "/api", RankerWeb do
     pipe_through :api
 
     resources "/users", UserController, except: [:new, :edit]
+  end
+
+  scope "/", RankerWeb do
+    pipe_through :browser
+
+    get "/*path", PageController, :index
   end
 
   # Enables LiveDashboard only for development
