@@ -1,5 +1,5 @@
-import React, { FC, useMemo, useRef } from "react";
-import { Box, Button, ButtonProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Grid, Heading, Input, Link, useDisclosure } from '@chakra-ui/react'
+import { FC, useRef } from "react";
+import { Box, Button, ButtonProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Grid, Heading, useDisclosure } from '@chakra-ui/react'
 import { useCookies } from "../hooks/useCookies";
 
 interface ILogInLogOutButtonProps {
