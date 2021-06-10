@@ -15,6 +15,6 @@ defmodule Ranker.Authentication.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :email, :provider, :token])
-    |> validate_required([:name, :email, :provider, :token])
+    |> validate_required([:name, :email, :provider])
   end
 end
