@@ -12,7 +12,7 @@ module.exports = (env, options) => {
   return {
     optimization: {
       minimizer: [
-        new TerserPlugin({ cache: true, parallel: true, sourceMap: devMode }),
+        new TerserPlugin({ parallel: true }),
         new OptimizeCSSAssetsPlugin({})
       ]
     },
@@ -39,14 +39,13 @@ module.exports = (env, options) => {
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
-            'sass-loader',
           ],
         }
       ]
     },
     plugins: [
       new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-      new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
+      new CopyWebpackPlugin({ patterns: [{ from: 'static/', to: '../' }] })
     ]
     .concat(devMode ? [new HardSourceWebpackPlugin()] : [])
   }
