@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "jsx": "react",
+        "esModuleInterop": true
+    },
+    "include": ["src/**/*", "**/*.d.ts"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}

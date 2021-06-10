@@ -1,6 +1,4 @@
 const path = require('path');
-const glob = require('glob');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -10,6 +8,9 @@ module.exports = (env, options) => {
   const devMode = options.mode !== 'production';
 
   return {
+    resolve: {
+      extensions: ['.js', '.jsx', '.json', '.wasm', '.ts', '.tsx'],
+    },
     optimization: {
       minimizer: [
         new TerserPlugin({ parallel: true }),
@@ -17,7 +18,7 @@ module.exports = (env, options) => {
       ]
     },
     entry: {
-      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+      'app': path.resolve(__dirname, './src/main.tsx')
     },
     output: {
       filename: '[name].js',
@@ -28,6 +29,13 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
+          test: /\.tsx?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'ts-loader'
+          }
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
@@ -35,7 +43,7 @@ module.exports = (env, options) => {
           }
         },
         {
-          test: /\.[s]?css$/,
+          test: /\.css$/,
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
