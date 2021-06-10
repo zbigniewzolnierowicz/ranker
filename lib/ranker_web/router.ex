@@ -18,12 +18,20 @@ defmodule RankerWeb.Router do
     pipe_through :api
 
     resources "/users", UserController, except: [:new, :edit]
-    post "/identity/callback", AuthController, :identity_callback
+  end
+
+  scope "/auth", RankerWeb do
+    pipe_through :browser
+
+    get "/logout", AuthController, :logout
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   scope "/", RankerWeb do
     pipe_through :browser
 
+    get "/", PageController, :index
     get "/*path", PageController, :index
   end
 

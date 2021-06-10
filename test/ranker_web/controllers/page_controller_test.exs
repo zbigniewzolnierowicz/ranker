@@ -3,6 +3,11 @@ defmodule RankerWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert html_response(conn, 200) =~ "<div id=\"app\"></div>"
+  end
+
+  test "GET /<random string>", %{conn: conn} do
+    conn = get(conn, "/foobar")
+    assert html_response(conn, 200) =~ "<div id=\"app\"></div>"
   end
 end

@@ -101,4 +101,16 @@ defmodule Ranker.Authentication do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  @spec upsert_user(:invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}) ::
+          {:ok, %User{}} | {:error, %Ecto.Changeset{data: %User{}}}
+  def upsert_user(attrs \\ %{}) do
+    changeset = change_user(%User{}, attrs)
+    case Repo.get_by(User, email: changeset.changes.email) do
+      nil ->
+        Repo.insert(changeset)
+      user ->
+        {:ok, user}
+    end
+  end
 end
