@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Link as RouterLink } from 'react-router-dom'
 import { hideInMobile, showInMobile } from "../utils/CSSHelpers";
+import { HamburgerIcon } from '@chakra-ui/icons'
 
 interface ILogInLogOutButtonProps {
     href: string
@@ -68,7 +69,9 @@ export const Header: FC = () => {
                 justifyItems="center"
                 gridColumn="span 1 / -1"
             >
-                <Button onClick={onOpen}>MNU</Button>
+                <Button onClick={onOpen}>
+                    <HamburgerIcon />
+                </Button>
             </Box>
             <Drawer
                 isOpen={isOpen}
