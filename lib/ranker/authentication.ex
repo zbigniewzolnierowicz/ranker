@@ -18,7 +18,8 @@ defmodule Ranker.Authentication do
 
   """
   def list_users do
-    Repo.all(from u in "users", order_by: :created_at, preload: [:pool])
+    Repo.all(from u in User, order_by: u.inserted_at)
+    |> Repo.preload(:pool)
   end
 
   @doc """
