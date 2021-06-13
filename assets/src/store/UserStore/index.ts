@@ -1,5 +1,5 @@
-import { Action, PayloadAction } from "@reduxjs/toolkit"
-import { IUser } from "../../types/user"
+import { Action, PayloadAction } from '@reduxjs/toolkit'
+import { IUser } from '../../types/user'
 
 interface IAppState {
     logged_in: boolean
@@ -22,19 +22,19 @@ export type UserActions = PayloadAction<IUser, EUserPayloadActions> | Action<EUs
 
 export const LoggedInUserReducer = (state = initialState, action: UserActions): IAppState => {
     switch (action.type) {
-        case EUserPayloadActions.LOG_USER_IN:
-            return {
-                ...state,
-                user_data: action.payload,
-                logged_in: true
-            }
-        case EUserPayloadlessActions.LOG_USER_OUT:
-            return {
-                ...state,
-                user_data: undefined,
-                logged_in: false
-            }
-        default:
-            return state
+    case EUserPayloadActions.LOG_USER_IN:
+        return {
+            ...state,
+            user_data: action.payload,
+            logged_in: true
+        }
+    case EUserPayloadlessActions.LOG_USER_OUT:
+        return {
+            ...state,
+            user_data: undefined,
+            logged_in: false
+        }
+    default:
+        return state
     }
 }

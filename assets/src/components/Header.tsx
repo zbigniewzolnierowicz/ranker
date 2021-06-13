@@ -1,9 +1,9 @@
-import { FC, useRef } from "react";
+import { FC, useRef } from 'react'
 import { Box, Button, ButtonProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Grid, Heading, Link, useDisclosure } from '@chakra-ui/react'
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 import { Link as RouterLink } from 'react-router-dom'
-import { hideInMobile, showInMobile } from "../utils/CSSHelpers";
+import { hideInMobile, showInMobile } from '../utils/CSSHelpers'
 import { HamburgerIcon } from '@chakra-ui/icons'
 
 interface ILogInLogOutButtonProps {
@@ -94,11 +94,11 @@ export const Header: FC = () => {
                     </DrawerHeader>
 
                     <DrawerBody display="flex" flexDir="column">
-                    {loggedIn && paths.map(path => (
-                        <>
-                            <Link as={RouterLink} onClick={onClose} to={path.to} py={4} height="fit-content" width="100%">{path.text}</Link>
-                        </>
-                    ))}
+                        {loggedIn && paths.map(path => (
+                            <>
+                                <Link as={RouterLink} onClick={onClose} to={path.to} py={4} height="fit-content" width="100%">{path.text}</Link>
+                            </>
+                        ))}
                     </DrawerBody>
 
                     <DrawerFooter>

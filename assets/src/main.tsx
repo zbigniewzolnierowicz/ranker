@@ -1,10 +1,10 @@
-import "../../deps/phoenix_html"
-import ReactDOM from "react-dom"
+import '../../deps/phoenix_html'
+import ReactDOM from 'react-dom'
 import { App } from './App'
-import { FC } from "react"
-import { Provider } from "react-redux"
-import { store } from "./store"
-import { ChakraProvider } from "@chakra-ui/react"
+import { FC } from 'react'
+import { Provider } from 'react-redux'
+import { store } from './store'
+import { ChakraProvider } from '@chakra-ui/react'
 
 const AppWithWrappers: FC = () => {
     return (
@@ -16,6 +16,6 @@ const AppWithWrappers: FC = () => {
     )
 }
 
-ReactDOM.render(<AppWithWrappers />, document.getElementById("app"))
+ReactDOM.render(<AppWithWrappers />, document.getElementById('app'))
 
 export {}

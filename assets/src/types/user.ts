@@ -1,4 +1,4 @@
-import { IPool } from "./pool";
+import { IPool } from './pool'
 
 export interface IUser<TPool = IPool> {
     id: number

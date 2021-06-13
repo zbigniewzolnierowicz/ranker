@@ -1,10 +1,10 @@
-import { Box, Heading, Text } from "@chakra-ui/react"
-import { useMemo } from "react"
-import { useSelector } from "react-redux"
-import { Bold } from "../components/textFormatting/Bold"
-import { H1, H2 } from "../components/textFormatting/Headings"
-import { RootState } from "../store"
-import { IUser } from "../types/user"
+import { Box, Heading, Text } from '@chakra-ui/react'
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { Bold } from '../components/textFormatting/Bold'
+import { H1, H2 } from '../components/textFormatting/Headings'
+import { RootState } from '../store'
+import { IUser } from '../types/user'
 
 export const Me = () => {
     const userData = useSelector<RootState, IUser>(state => state.user.user_data)
