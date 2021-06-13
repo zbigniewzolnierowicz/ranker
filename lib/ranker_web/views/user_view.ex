@@ -15,6 +15,7 @@ defmodule RankerWeb.UserView do
       name: user.name,
       email: user.email,
       provider: user.provider,
+      spendable_points: user.spendable_points,
       pool: %{
         month: user.pool.month,
         year: user.pool.year,

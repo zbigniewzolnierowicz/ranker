@@ -9,6 +9,7 @@ defmodule Ranker.Authentication.User do
     field :name, :string
     field :provider, :string
     field :token, :string
+    field :spendable_points, :integer
 
     has_one :pool, Pool
 
