@@ -10,11 +10,8 @@ defmodule RankerWeb.AuthController do
     %Ueberauth.Auth.Info{email: email, name: name} = auth.info
     params = %{email: email, name: name, provider: provider, token: auth.credentials.token}
     case Authentication.upsert_user(params) do
-      {:ok, user} ->
-        conn
-        |> put_session(:user_id, user.id)
-        |> Plug.Conn.put_resp_cookie("user_id", Integer.to_string(user.id), http_only: false)
-        |> redirect(to: Routes.page_path(conn, :index))
+      {:ok, %{user: %Ranker.Authentication.User{} = user}} ->
+        good_login(conn, user)
       true ->
         bad_login(conn)
     end
@@ -28,8 +25,15 @@ defmodule RankerWeb.AuthController do
     |> redirect(to: RankerWeb.Router.Helpers.page_path(conn, :index, path: "fail"))
   end
 
+  defp good_login(conn, %Ranker.Authentication.User{id: user_id}) do
+    conn
+    |> put_session(:user_id, user_id)
+    |> put_resp_cookie("user_id", Integer.to_string(user_id), http_only: false)
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
+
   def logout(conn, _params) do
-    IO.puts(Plug.Conn.get_session(conn, :user_id))
+    IO.puts(get_session(conn, :user_id))
     conn
     |> configure_session(drop: true)
     |> delete_resp_cookie("user_id")

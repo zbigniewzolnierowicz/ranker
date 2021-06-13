@@ -21,6 +21,7 @@ export const App = () => {
       dispatch({ type: EUserPayloadActions.LOG_USER_IN, payload: res.data })
     }
     if (user_id !== undefined) {
+      console.log(user_id)
       fetchUserData(user_id)
     } else {
       dispatch({ type: EUserPayloadlessActions.LOG_USER_OUT })

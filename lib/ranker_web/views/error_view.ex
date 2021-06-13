@@ -10,6 +10,14 @@ defmodule RankerWeb.ErrorView do
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.html" becomes
   # "Not Found".
+
+  def render("403.json", _assigns) do
+    %{
+      status: 403,
+      message: "You are forbidden from accessing this resource."
+    }
+  end
+
   def template_not_found(template, _assigns) do
     Phoenix.Controller.status_message_from_template(template)
   end

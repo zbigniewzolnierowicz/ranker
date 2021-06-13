@@ -4,20 +4,14 @@ defmodule RankerWeb.UserController do
   alias Ranker.Authentication
   alias Ranker.Authentication.User
 
+  plug RankerWeb.Plugs.RequireLogin when action in [:index, :show, :update, :delete]
+  plug :require_owner_of_account when action in [:edit, :update, :delete]
+
   action_fallback RankerWeb.FallbackController
 
   def index(conn, _params) do
     users = Authentication.list_users()
     render(conn, "index.json", users: users)
-  end
-
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Authentication.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
-    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -38,6 +32,18 @@ defmodule RankerWeb.UserController do
 
     with {:ok, %User{}} <- Authentication.delete_user(user) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def require_owner_of_account(conn, _params) do
+    %{params: %{"id" => user_id}} = conn
+    current_user_id = Plug.Conn.get_session(:user_id)
+    if user_id == current_user_id do
+      conn
+    else
+      conn
+      |> Plug.Conn.put_status(:forbidden)
+      |> Plug.Conn.halt()
     end
   end
 end

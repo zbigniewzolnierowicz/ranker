@@ -17,7 +17,7 @@ defmodule RankerWeb.Router do
   scope "/api", RankerWeb do
     pipe_through :api
 
-    resources "/users", UserController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit, :create]
   end
 
   scope "/auth", RankerWeb do
