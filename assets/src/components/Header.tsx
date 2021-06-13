@@ -1,6 +1,7 @@
 import { FC, useRef } from "react";
 import { Box, Button, ButtonProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Grid, Heading, useDisclosure } from '@chakra-ui/react'
-import { useCookies } from "../hooks/useCookies";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface ILogInLogOutButtonProps {
     href: string
@@ -24,9 +25,9 @@ const LogInOut: FC<ILogInOutProps> = ({ loggedIn }) => {
 }
 
 export const Header: FC = () => {
-    const cookies = useCookies()
     const { isOpen, onClose, onOpen } = useDisclosure()
     const btnRef = useRef()
+    const loggedIn = useSelector<RootState, boolean>(state => state.user.logged_in)
     return (
         <Grid
             w="100%"
@@ -48,7 +49,7 @@ export const Header: FC = () => {
                 alignItems="center"
                 justifyItems="center"
             >
-                <LogInOut loggedIn={cookies.get('logged_in') === 'true'} />
+                <LogInOut loggedIn={loggedIn} />
             </Box>
             <Box
                 display={['grid', 'none']}
@@ -75,7 +76,7 @@ export const Header: FC = () => {
                     </DrawerBody>
 
                     <DrawerFooter>
-                        <LogInOut loggedIn={cookies.get('logged_in') === 'true'} />
+                        <LogInOut loggedIn={loggedIn} />
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

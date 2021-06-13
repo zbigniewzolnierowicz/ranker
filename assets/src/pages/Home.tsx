@@ -1,13 +1,20 @@
+import { Link } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, EPayloadActions, RootState } from "../store"
+import { AppDispatch, RootState } from "../store"
+import { EUserPayloadActions } from "../store/UserStore"
+import { IUser } from "../types/user"
 
 export const Home = () => {
-    const logged_in = useSelector<RootState>(state => state.user.logged_in)
-    const dispatch = useDispatch<AppDispatch>()
+    const loggedIn = useSelector<RootState, boolean>(state => state.user.logged_in)
+    const userData = useSelector<RootState, IUser>(state => state.user.user_data)
     return (
         <div>
-            <h1>{JSON.stringify(logged_in)}</h1>
-            <button onClick={() => dispatch({ type: EPayloadActions.LOG_USER_IN, payload: { id: 1, email: 'zbigniew.zolnierowicz@gmail.com' } })}>Toggle log in</button>
+            <Link href="/auth/logout">Log out</Link>
+            {loggedIn ? (
+                <div>
+                    {JSON.stringify(userData)}
+                </div>
+            ) : ""}
         </div>
     )
 }

@@ -13,7 +13,7 @@ defmodule RankerWeb.AuthController do
       {:ok, user} ->
         conn
         |> put_session(:user_id, user.id)
-        |> Plug.Conn.put_resp_cookie("logged_in", "true", http_only: false)
+        |> Plug.Conn.put_resp_cookie("user_id", Integer.to_string(user.id), http_only: false)
         |> redirect(to: Routes.page_path(conn, :index))
       true ->
         bad_login(conn)
@@ -24,7 +24,7 @@ defmodule RankerWeb.AuthController do
 
   defp bad_login(conn) do
     conn
-    |> delete_resp_cookie("logged_in")
+    |> delete_resp_cookie("user_id")
     |> redirect(to: RankerWeb.Router.Helpers.page_path(conn, :index, path: "fail"))
   end
 
@@ -32,7 +32,7 @@ defmodule RankerWeb.AuthController do
     IO.puts(Plug.Conn.get_session(conn, :user_id))
     conn
     |> configure_session(drop: true)
-    |> delete_resp_cookie("logged_in")
+    |> delete_resp_cookie("user_id")
     |> redirect(to: Routes.page_path(conn, :index))
   end
 end
