@@ -1,7 +1,9 @@
 import { FC, useRef } from "react";
-import { Box, Button, ButtonProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Grid, Heading, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, ButtonProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Grid, Heading, Link, useDisclosure } from '@chakra-ui/react'
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { Link as RouterLink } from 'react-router-dom'
+import { hideInMobile, showInMobile } from "../utils/CSSHelpers";
 
 interface ILogInLogOutButtonProps {
     href: string
@@ -33,26 +35,35 @@ export const Header: FC = () => {
             w="100%"
             h="fit-content"
             bg="whitesmoke"
-            templateColumns="5fr 1fr"
+            templateColumns="1fr 3fr 1fr"
             p={4}
             gap={4}
         >
             <Heading
+                as={RouterLink}
+                to="/"
                 gridColumnStart="1"
                 gridColumnEnd="span 1"
                 textAlign="center"
             >
                 Ranker
             </Heading>
+            <Box display={hideInMobile('flex')} as="nav" flexDir="row" listStyleType="none" alignItems="center" >
+                {loggedIn && (
+                    <>
+                        <Link as={RouterLink} to="/me" height="fit-content" px={4}>Me</Link>
+                    </>
+                )}
+            </Box>
             <Box
-                display={['none', 'grid']}
+                display={hideInMobile('grid')}
                 alignItems="center"
                 justifyItems="center"
             >
                 <LogInOut loggedIn={loggedIn} />
             </Box>
             <Box
-                display={['grid', 'none']}
+                display={showInMobile('grid')}
                 alignItems="center"
                 justifyItems="center"
                 gridColumn="span 1 / -1"
@@ -72,7 +83,12 @@ export const Header: FC = () => {
                         Ranker
                     </DrawerHeader>
 
-                    <DrawerBody>
+                    <DrawerBody display="flex" flexDir="column">
+                    {loggedIn && (
+                        <>
+                            <Link as={RouterLink} onClick={onClose} to="/me" py={4} height="fit-content" width="100%">Me</Link>
+                        </>
+                    )}
                     </DrawerBody>
 
                     <DrawerFooter>

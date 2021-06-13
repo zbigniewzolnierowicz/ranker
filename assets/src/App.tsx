@@ -1,18 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom"
 import Cookies from "universal-cookie/es6";
 import { Header } from "./components/Header"
-import { About } from "./pages/About";
+import { Me } from "./pages/Me";
 import { Home } from "./pages/Home";
-import { Users } from "./pages/Users";
-import { AppDispatch } from "./store";
+import { AppDispatch, RootState } from "./store";
 import { EUserPayloadActions, EUserPayloadlessActions } from "./store/UserStore";
 import { IUser } from "./types/user";
 import { client } from "./utils/client";
 
 export const App = () => {
   const dispatch = useDispatch<AppDispatch>()
+  const loggedIn = useSelector<RootState, boolean>(state => state.user.logged_in)
   useEffect(() => {
     const cookies = new Cookies()
     const user_id = cookies.get('user_id')
@@ -32,11 +32,8 @@ export const App = () => {
           <div>
             <Header />
             <Switch>
-              <Route path="/about">
-                <About />
-              </Route>
-              <Route path="/users">
-                <Users />
+              <Route path="/me">
+                {loggedIn ? <Me /> : <Redirect to="/" />}
               </Route>
               <Route path="/">
                 <Home />
