@@ -2,11 +2,15 @@ defmodule Ranker.Authentication.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Ranker.Authentication.Pool
+
   schema "users" do
     field :email, :string
     field :name, :string
     field :provider, :string
     field :token, :string
+
+    has_one :pool, Pool
 
     timestamps()
   end

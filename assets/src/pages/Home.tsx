@@ -9,12 +9,11 @@ export const Home = () => {
     const userData = useSelector<RootState, IUser>(state => state.user.user_data)
     return (
         <div>
-            <Link href="/auth/logout">Log out</Link>
             {loggedIn ? (
                 <div>
                     {JSON.stringify(userData)}
                 </div>
-            ) : ""}
+            ) : "u must log in"}
         </div>
     )
 }

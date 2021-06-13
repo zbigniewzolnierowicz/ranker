@@ -21,7 +21,7 @@ defmodule RankerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Authentication.get_user!(id)
+    user = Authentication.get_user_with_pool!(id)
     render(conn, "show.json", user: user)
   end
 

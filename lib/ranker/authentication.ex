@@ -37,6 +37,10 @@ defmodule Ranker.Authentication do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_with_pool!(id) do
+    Repo.get!(User, id) |> Repo.preload(:pool)
+  end
+
   @doc """
   Creates a user.
 
@@ -108,7 +112,18 @@ defmodule Ranker.Authentication do
     changeset = change_user(%User{}, attrs)
     case Repo.get_by(User, email: changeset.changes.email) do
       nil ->
-        Repo.insert(changeset)
+        today = Date.utc_today()
+        %{user: user} =
+          Ecto.Multi.new()
+          |> Ecto.Multi.insert(:user, changeset)
+          |> Ecto.Multi.insert(:pool,
+            fn %{user: user} ->
+              Ecto.build_assoc(user, :pool)
+              |> Ranker.Authentication.Pool.changeset(%{month: today.month, year: today.year})
+            end
+          )
+          |> Repo.transaction()
+        {:ok, user}
       user ->
         {:ok, user}
     end
