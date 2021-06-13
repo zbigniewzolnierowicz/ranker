@@ -1,8 +1,9 @@
 import { IPool } from "./pool";
 
-export interface IUser {
+export interface IUser<TPool = IPool> {
     id: number
     email: string
     provider: string
-    points: IPool
+    spendable_points: number
+    pool: TPool
 }
