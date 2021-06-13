@@ -27,6 +27,13 @@ const LogInOut: FC<ILogInOutProps> = ({ loggedIn }) => {
         )
 }
 
+const paths: { to: string, text: string }[] = [
+    {
+        to: '/me',
+        text: 'Me'
+    }
+]
+
 export const Header: FC = () => {
     const { isOpen, onClose, onOpen } = useDisclosure()
     const btnRef = useRef()
@@ -50,11 +57,11 @@ export const Header: FC = () => {
                 Ranker
             </Heading>
             <Box display={hideInMobile('flex')} as="nav" flexDir="row" listStyleType="none" alignItems="center" >
-                {loggedIn && (
+                {loggedIn && paths.map(path => (
                     <>
-                        <Link as={RouterLink} to="/me" height="fit-content" px={4}>Me</Link>
+                        <Link as={RouterLink} to={path.to} height="fit-content" px={4}>{path.text}</Link>
                     </>
-                )}
+                ))}
             </Box>
             <Box
                 display={hideInMobile('grid')}
@@ -87,11 +94,11 @@ export const Header: FC = () => {
                     </DrawerHeader>
 
                     <DrawerBody display="flex" flexDir="column">
-                    {loggedIn && (
+                    {loggedIn && paths.map(path => (
                         <>
-                            <Link as={RouterLink} onClick={onClose} to="/me" py={4} height="fit-content" width="100%">Me</Link>
+                            <Link as={RouterLink} onClick={onClose} to={path.to} py={4} height="fit-content" width="100%">{path.text}</Link>
                         </>
-                    )}
+                    ))}
                     </DrawerBody>
 
                     <DrawerFooter>
