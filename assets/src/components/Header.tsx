@@ -2,7 +2,6 @@ import { FC, useRef, ReactElement } from 'react'
 import {
   Box,
   Button,
-  ButtonProps,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -13,6 +12,7 @@ import {
   Grid,
   Heading,
   Link,
+  Stack,
   useDisclosure,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
@@ -20,16 +20,7 @@ import { RootState } from '../store'
 import { Link as RouterLink } from 'react-router-dom'
 import { hideInMobile, showInMobile } from '../utils/CSSHelpers'
 import { HamburgerIcon } from '@chakra-ui/icons'
-
-interface ILogInLogOutButtonProps {
-  href: string
-}
-
-const LogInLogOutButton: FC<ILogInLogOutButtonProps & ButtonProps> = ({ href, children, ...rest }) => (
-  <Button as="a" colorScheme="green" href={href} w="100%" {...rest}>
-    {children}
-  </Button>
-)
+import { LogInLogOutButton } from './LoginButton'
 
 interface ILogInOutProps {
   loggedIn?: boolean
@@ -37,9 +28,12 @@ interface ILogInOutProps {
 
 const LogInOut: FC<ILogInOutProps> = ({ loggedIn }) => {
   return loggedIn ? (
-    <LogInLogOutButton href="/auth/logout">Log out</LogInLogOutButton>
+    <LogInLogOutButton provider="logout" href="/auth/logout" />
   ) : (
-    <LogInLogOutButton href="/auth/github">Log in</LogInLogOutButton>
+    <Stack direction="row">
+      <LogInLogOutButton provider="github" href="/auth/github" />
+      <LogInLogOutButton provider="google" href="/auth/google" />
+    </Stack>
   )
 }
 
