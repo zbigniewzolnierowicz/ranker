@@ -9,3 +9,10 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Ranker.Repo
+alias Ranker.PointTrading.Reward
+
+Repo.insert!(%Reward{name: "One extra day of PTO"})
+
+Repo.insert!(%Reward{name: "Any pizza up to 40 PLN"})
