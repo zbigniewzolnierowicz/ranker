@@ -7,13 +7,13 @@ import { store } from './store'
 import { ChakraProvider } from '@chakra-ui/react'
 
 const AppWithWrappers: FC = () => {
-    return (
-        <Provider store={store}>
-            <ChakraProvider>
-                <App />
-            </ChakraProvider>
-        </Provider>
-    )
+  return (
+    <Provider store={store}>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </Provider>
+  )
 }
 
 ReactDOM.render(<AppWithWrappers />, document.getElementById('app'))

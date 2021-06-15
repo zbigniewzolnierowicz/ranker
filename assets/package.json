@@ -4,7 +4,10 @@
   "license": "MIT",
   "scripts": {
     "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "watch": "webpack --mode development --watch",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint": "yarn run lint:check"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.13",
@@ -38,10 +41,13 @@
     "css-loader": "^5.2.6",
     "csstype": "^3.0.8",
     "eslint": "^7.28.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "mini-css-extract-plugin": "^1.6.0",
     "optimize-css-assets-webpack-plugin": "^6.0.0",
+    "prettier": "^2.3.1",
     "terser-webpack-plugin": "^5.1.3",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2"

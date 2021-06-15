@@ -1,3 +1,3 @@
-export const Users = () => (
-    <div>Users</div>
-)
+import { FC } from 'react'
+
+export const Users: FC = () => <div>Users</div>

@@ -1,7 +1,5 @@
-export const Home = () => {
-    return (
-        <div>
-            main
-        </div>
-    )
+import { FC } from 'react'
+
+export const Home: FC = () => {
+  return <div>main</div>
 }

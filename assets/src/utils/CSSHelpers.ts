@@ -1,4 +1,8 @@
 import { Property } from 'csstype'
 
-export const hideInMobile = (display: Property.Display) => ['none', display]
-export const showInMobile = (display: Property.Display) => [display, 'none']
+type MediaQueryArrayReturner = (display: Property.Display) => Property.Display[]
+
+const hiddenDisplayProperty: Property.Display = 'none'
+
+export const hideInMobile: MediaQueryArrayReturner = display => [hiddenDisplayProperty, display]
+export const showInMobile: MediaQueryArrayReturner = display => [display, hiddenDisplayProperty]

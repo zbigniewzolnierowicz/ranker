@@ -1,3 +1,3 @@
 interface Window {
-    userToken: string
+  userToken: string
 }

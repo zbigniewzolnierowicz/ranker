@@ -6,15 +6,20 @@
 //
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
-import {Socket} from 'phoenix'
+import { Socket } from 'phoenix'
 
-const socket = new Socket('/socket', {params: {token: window.userToken}})
+const socket = new Socket('/socket', { params: { token: window.userToken } })
 
 socket.connect()
 
 const channel = socket.channel('topic:subtopic', {})
-channel.join()
-    .receive('ok', resp => { console.log('Joined successfully', resp) })
-    .receive('error', resp => { console.log('Unable to join', resp) })
+channel
+  .join()
+  .receive('ok', resp => {
+    console.log('Joined successfully', resp)
+  })
+  .receive('error', resp => {
+    console.log('Unable to join', resp)
+  })
 
 export default socket
