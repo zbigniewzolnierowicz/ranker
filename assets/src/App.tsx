@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Cookies from 'universal-cookie/es6'
 import { Header } from './components/Header'
-import { Me } from './pages/Me'
-import { Home } from './pages/Home'
 import { AppDispatch, RootState } from './store'
 import { EUserPayloadActions, EUserPayloadlessActions } from './store/UserStore'
 import { IUser } from './types/user'
 import { client } from './utils/client'
+
+import { Me } from './pages/Me'
+import { Home } from './pages/Home'
+import { Shop } from './pages/Shop'
 
 export const App: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,6 +35,7 @@ export const App: FC = () => {
         <Header />
         <Switch>
           <Route path="/me">{loggedIn ? <Me /> : <Redirect to="/" />}</Route>
+          <Route path="/shop">{loggedIn ? <Shop /> : <Redirect to="/" />}</Route>
           <Route path="/">
             <Home />
           </Route>

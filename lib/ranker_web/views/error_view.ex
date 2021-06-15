@@ -11,12 +11,21 @@ defmodule RankerWeb.ErrorView do
   # the template name. For example, "404.html" becomes
   # "Not Found".
 
-  def render("403.json", _assigns) do
+  def render("403.json", %{message: message, details: details}) do
     %{
       status: 403,
-      message: "You are forbidden from accessing this resource."
+      message: message,
+      details: details
     }
   end
+
+  def render("403.json", %{message: message}) do
+    %{
+      status: 403,
+      message: message
+    }
+  end
+
 
   def template_not_found(template, _assigns) do
     Phoenix.Controller.status_message_from_template(template)

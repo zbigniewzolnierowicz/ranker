@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react'
+import { FC, useRef, ReactElement } from 'react'
 import {
   Box,
   Button,
@@ -43,10 +43,14 @@ const LogInOut: FC<ILogInOutProps> = ({ loggedIn }) => {
   )
 }
 
-const paths: { to: string; text: string }[] = [
+const paths: { to: string; text: ReactElement | string }[] = [
   {
     to: '/me',
     text: 'Me',
+  },
+  {
+    to: '/shop',
+    text: 'Reward shop',
   },
 ]
 

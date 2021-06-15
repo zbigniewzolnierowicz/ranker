@@ -15,8 +15,23 @@ defmodule RankerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Authentication.get_user_with_pool!(id)
-    render(conn, "show.json", user: user)
+    try do
+      user_id = String.to_integer(id)
+
+      user = cond do
+        user_id == conn.assigns[:user_id] ->
+          user = Authentication.get_user_with_pool!(id)
+        true ->
+          user = Authentication.get_user!(id)
+        end
+      render(conn, "show.json", user: user)
+    rescue
+      _e in ArgumentError ->
+        conn
+        |> Plug.Conn.put_status(403)
+        |> put_view(RankerWeb.ErrorView)
+        |> render("403.json", message: "Incorrect user ID.", details: "User ID must be numerical.")
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

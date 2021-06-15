@@ -3,6 +3,7 @@ import { FC, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { Bold } from '../components/textFormatting/Bold'
 import { H1, H2 } from '../components/textFormatting/Headings'
+import { consts } from '../consts'
 import { RootState } from '../store'
 import { IUser } from '../types/user'
 
@@ -17,7 +18,7 @@ export const Me: FC = () => {
     }
   }, [userData])
   return (
-    <Box maxW="120ch" mx="auto" mt={12}>
+    <Box maxW={consts.readableWidth} mx="auto" mt={12}>
       <H1>About you</H1>
       <H2>Data</H2>
       <Text>
