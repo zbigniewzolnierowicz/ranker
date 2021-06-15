@@ -26,10 +26,13 @@ defmodule RankerWeb.AuthController do
   end
 
   defp good_login(conn, %Ranker.Authentication.User{id: user_id}) do
+    conn = conn
+      |> put_session(:user_id, user_id)
+      |> put_resp_cookie("user_id", Integer.to_string(user_id), http_only: false)
+      |> Plug.Conn.assign(:user_id, user_id)
+      |> redirect(to: Routes.page_path(conn, :index))
+    IO.inspect(conn.assigns)
     conn
-    |> put_session(:user_id, user_id)
-    |> put_resp_cookie("user_id", Integer.to_string(user_id), http_only: false)
-    |> redirect(to: Routes.page_path(conn, :index))
   end
 
   def logout(conn, _params) do

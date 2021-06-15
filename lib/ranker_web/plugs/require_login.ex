@@ -6,8 +6,8 @@ defmodule RankerWeb.Plugs.RequireLogin do
   end
 
   def call(conn, _params) do
-    conn = fetch_session(conn)
-    if get_session(conn, :user_id) do
+    IO.inspect(conn.assigns)
+    if conn.assigns[:user] do
       conn
     else
       conn
