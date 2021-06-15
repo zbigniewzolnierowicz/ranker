@@ -43,13 +43,20 @@ defmodule RankerWeb.RewardController do
 
   def buy_reward(conn, %{"user_id" => user_id, "reward_id" => reward_id}) do
     reward = PointTrading.get_reward!(reward_id)
-    user = Ranker.Authentication.get_user!(user_id)
-    IO.inspect(reward)
-    IO.inspect(user)
-
-    with {:ok, data} <- PointTrading.buy_reward(user, reward) do
-      IO.inspect(data)
-      json(conn, %{foo: "bar"})
+    user = Ranker.Authentication.get_user_with_rewards!(user_id)
+    conn = Phoenix.Controller.put_view(conn, RankerWeb.UserView)
+    cond do
+      Enum.member?(user.rewards, reward) ->
+        conn
+        |> Plug.Conn.put_status(202)
+        |> render("show.json", user: user)
+      true ->
+        with {:ok, user} <- PointTrading.buy_reward(user, reward) do
+          conn
+          |> Plug.Conn.put_status(201)
+          |> render("show.json", user: user)
+        end
     end
+
   end
 end

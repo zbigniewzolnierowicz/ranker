@@ -4,6 +4,7 @@ defmodule Ranker.Authentication.User do
 
   alias Ranker.PointTrading.Pool
   alias Ranker.PointTrading.Reward
+  alias Ranker.Authentication.User
 
   schema "users" do
     field :email, :string
@@ -37,9 +38,11 @@ defmodule Ranker.Authentication.User do
     |> validate_required([:name, :email, :provider, :token])
   end
 
-  def changeset_add_role(user, attrs) do
+  def changeset_add_reward(%User{} = user, attrs) do
     user
     |> change()
-    |> put_assoc(:rewards, attrs.rewards)
+    |> cast(attrs, [:spendable_points])
+    |> cast_assoc(:rewards)
+    |> validate_required([:spendable_points, :rewards])
   end
 end

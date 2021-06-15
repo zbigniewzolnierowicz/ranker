@@ -106,8 +106,11 @@ defmodule Ranker.PointTrading do
   def buy_reward(%User{} = user, %Reward{} = reward) do
     user
     |> Repo.preload(:rewards)
-    |> User.changeset_add_role(%{rewards: [reward]})
-    |> Repo.update!()
+    |> User.changeset_add_reward(
+      %{reward: reward,
+        spendable_points: user.spendable_points - reward.price}
+    )
+    |> Repo.update()
   end
 
 end

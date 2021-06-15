@@ -4,6 +4,7 @@ defmodule Ranker.PointTrading.Reward do
 
   schema "rewards" do
     field :name, :string
+    field :price, :integer
 
     timestamps()
   end

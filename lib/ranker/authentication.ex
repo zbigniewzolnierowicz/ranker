@@ -42,6 +42,10 @@ defmodule Ranker.Authentication do
     Repo.get!(User, id) |> Repo.preload(:pool)
   end
 
+  def get_user_with_rewards!(id) do
+    Repo.get!(User, id) |> Repo.preload(:rewards)
+  end
+
   @doc """
   Creates a user.
 
