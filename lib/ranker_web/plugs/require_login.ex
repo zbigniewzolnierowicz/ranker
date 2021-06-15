@@ -6,7 +6,6 @@ defmodule RankerWeb.Plugs.RequireLogin do
   end
 
   def call(conn, _params) do
-    IO.inspect(conn.assigns)
     if conn.assigns[:user] do
       conn
     else

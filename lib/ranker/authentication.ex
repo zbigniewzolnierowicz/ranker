@@ -108,8 +108,12 @@ defmodule Ranker.Authentication do
     User.changeset(user, attrs)
   end
 
+  def new_user_change(%User{} = user, attrs \\ %{}) do
+    User.changeset_new_user(user, attrs)
+  end
+
   def upsert_user(attrs \\ %{}) do
-    changeset = change_user(%User{}, attrs)
+    changeset = new_user_change(%User{}, attrs)
     case Repo.get_by(User, email: changeset.changes.email) do
       nil ->
         today = Date.utc_today()
