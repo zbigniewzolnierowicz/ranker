@@ -9,9 +9,8 @@ import { IUser } from '../types/user'
 export const Me: FC = () => {
     const userData = useSelector<RootState, IUser>(state => state.user.user_data)
     const { poolSpendUntil, poolSpendStart } = useMemo(() => {
-        const poolSpendStart = new Date(userData.pool.year, userData.pool.month)
-        const poolSpendUntil = poolSpendStart
-        poolSpendUntil.setMonth(userData.pool.month + 1)
+        const poolSpendStart = new Date(userData.pool.year, userData.pool.month - 1)
+        const poolSpendUntil = new Date(userData.pool.year, userData.pool.month)
         return {
             poolSpendStart,
             poolSpendUntil
