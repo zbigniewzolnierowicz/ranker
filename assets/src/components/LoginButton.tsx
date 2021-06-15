@@ -1,5 +1,8 @@
 import { Button, ButtonProps, ThemeTypings } from '@chakra-ui/react'
 import { FC, ReactElement } from 'react'
+import { GrGithub, GrGoogle } from 'react-icons/gr'
+import { IoMdExit } from 'react-icons/io'
+import { CgKeyhole } from 'react-icons/cg'
 
 type LogInProviders = 'github' | 'google' | 'logout'
 
@@ -16,13 +19,13 @@ interface IProviderData {
 const getColorSchemeFromProvider = (provider: LogInProviders): IProviderData => {
   switch (provider) {
     case 'google':
-      return { colorScheme: 'blue', icon: <p>go</p> }
+      return { colorScheme: 'blue', icon: <GrGoogle /> }
     case 'github':
-      return { colorScheme: 'blackAlpha', icon: <p>gi</p> }
+      return { colorScheme: 'blackAlpha', icon: <GrGithub /> }
     case 'logout':
-      return { colorScheme: 'cyan', icon: <p>lo</p> }
+      return { colorScheme: 'cyan', icon: <IoMdExit /> }
     default:
-      return { colorScheme: 'green', icon: <p>li</p> }
+      return { colorScheme: 'green', icon: <CgKeyhole /> }
   }
 }
 
