@@ -7,7 +7,13 @@
     "watch": "webpack --mode development --watch",
     "lint:check": "eslint .",
     "lint:fix": "eslint --fix .",
-    "lint": "yarn run lint:check"
+    "lint": "yarn run lint:check",
+    "prepare": "cd .. && husky install assets/.husky"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint:fix"
+    }
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.13",
@@ -45,6 +51,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "hard-source-webpack-plugin": "^0.13.1",
+    "husky": "^6.0.0",
     "mini-css-extract-plugin": "^1.6.0",
     "optimize-css-assets-webpack-plugin": "^6.0.0",
     "prettier": "^2.3.1",
