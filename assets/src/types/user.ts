@@ -6,14 +6,6 @@ export interface IUser {
   email: string
   provider: string
   spendable_points: number
+  pool?: IPool
+  rewards?: IReward[]
 }
-
-export interface IUserWithPool extends IUser {
-  pool: IPool
-}
-
-export interface IUserWithRewards extends IUser {
-  rewards: IReward[]
-}
-
-export interface IUserWithEverything extends IUserWithPool, IUserWithRewards {}

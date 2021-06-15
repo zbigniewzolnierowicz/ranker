@@ -18,7 +18,7 @@ export const Shop: FC = () => {
       const data = res.data.data
       dispatch({ type: ERewardStorePayloadActions.POPULATE_STORE, payload: data })
     }
-    if (loggedIn) fetchRewards()
+    if (loggedIn && !rewards) fetchRewards()
   }, [loggedIn])
   return (
     <Box maxW={consts.readableWidth} mx="auto" mt="5rem">
