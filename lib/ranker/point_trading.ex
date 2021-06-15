@@ -7,6 +7,7 @@ defmodule Ranker.PointTrading do
   alias Ranker.Repo
 
   alias Ranker.PointTrading.Reward
+  alias Ranker.Authentication.User
 
   @doc """
   Returns the list of rewards.
@@ -101,4 +102,12 @@ defmodule Ranker.PointTrading do
   def change_reward(%Reward{} = reward, attrs \\ %{}) do
     Reward.changeset(reward, attrs)
   end
+
+  def buy_reward(%User{} = user, %Reward{} = reward) do
+    user
+    |> Repo.preload(:rewards)
+    |> User.changeset_add_role(%{rewards: [reward]})
+    |> Repo.update!()
+  end
+
 end

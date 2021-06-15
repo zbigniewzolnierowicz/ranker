@@ -40,4 +40,16 @@ defmodule RankerWeb.RewardController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def buy_reward(conn, %{"user_id" => user_id, "reward_id" => reward_id}) do
+    reward = PointTrading.get_reward!(reward_id)
+    user = Ranker.Authentication.get_user!(user_id)
+    IO.inspect(reward)
+    IO.inspect(user)
+
+    with {:ok, data} <- PointTrading.buy_reward(user, reward) do
+      IO.inspect(data)
+      json(conn, %{foo: "bar"})
+    end
+  end
 end

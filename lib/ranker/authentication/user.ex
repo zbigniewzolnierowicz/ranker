@@ -36,4 +36,10 @@ defmodule Ranker.Authentication.User do
     |> cast(attrs, [:name, :email, :provider, :token, :role])
     |> validate_required([:name, :email, :provider, :token])
   end
+
+  def changeset_add_role(user, attrs) do
+    user
+    |> change()
+    |> put_assoc(:rewards, attrs.rewards)
+  end
 end
