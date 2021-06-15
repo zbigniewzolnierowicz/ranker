@@ -20,9 +20,9 @@ defmodule RankerWeb.UserController do
 
       user = cond do
         user_id == conn.assigns[:user_id] ->
-          user = Authentication.get_user_with_pool!(id)
+          Authentication.get_user_with_everything!(id)
         true ->
-          user = Authentication.get_user!(id)
+          Authentication.get_user!(id)
         end
       render(conn, "show.json", user: user)
     rescue

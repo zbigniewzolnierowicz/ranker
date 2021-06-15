@@ -38,12 +38,22 @@ defmodule Ranker.Authentication do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  defp preload_pool(%User{} = user), do: user |> Repo.preload(:pool)
+
+  defp preload_rewards(%User{} = user), do: user |> Repo.preload(:rewards)
+
   def get_user_with_pool!(id) do
-    Repo.get!(User, id) |> Repo.preload(:pool)
+    Repo.get!(User, id) |> preload_pool()
   end
 
   def get_user_with_rewards!(id) do
-    Repo.get!(User, id) |> Repo.preload(:rewards)
+    Repo.get!(User, id) |> preload_rewards()
+  end
+
+  def get_user_with_everything!(id) do
+    Repo.get!(User, id)
+    |> preload_rewards()
+    |> preload_pool()
   end
 
   @doc """

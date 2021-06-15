@@ -14,8 +14,7 @@ defmodule RankerWeb.UserView do
     render_one(user, UserView, "user.json")
   end
 
-
-  def render("user.json", %{user: %User{rewards: [%Reward{}]} = user}) do
+  def render("user.json", %{user: %User{pool: %Ecto.Association.NotLoaded{}, rewards: [%Reward{}]} = user}) do
     %{id: user.id,
       name: user.name,
       email: user.email,
@@ -24,24 +23,30 @@ defmodule RankerWeb.UserView do
       rewards: render_many(user.rewards, RewardView, "reward.json")}
   end
 
-  def render("user.json", %{user: %User{pool: %Pool{}} = user}) do
+  def render("user.json", %{user: %User{pool: %Pool{}, rewards: %Ecto.Association.NotLoaded{}} = user}) do
     %{id: user.id,
       name: user.name,
       email: user.email,
       provider: user.provider,
       spendable_points: user.spendable_points,
-      pool: %{
-        month: user.pool.month,
-        year: user.pool.year,
-        points: user.pool.points
-      }}
+      pool: render(user.pool, UserView, "pool.json")}
   end
 
-  def render("user.json", %{user: %User{pool: %Ecto.Association.NotLoaded{}} = user}) do
+  def render("user.json", %{user: %User{pool: %Ecto.Association.NotLoaded{}, rewards: %Ecto.Association.NotLoaded{}} = user}) do
     %{id: user.id,
       name: user.name,
       email: user.email,
       provider: user.provider,
       spendable_points: user.spendable_points}
+  end
+
+  def render("user.json", %{user: %User{} = user}) do
+    %{id: user.id,
+      name: user.name,
+      email: user.email,
+      provider: user.provider,
+      spendable_points: user.spendable_points,
+      rewards: render_many(user.rewards, RewardView, "reward.json"),
+      pool: render_one(user.pool, RankerWeb.PoolView, "pool.json")}
   end
 end
