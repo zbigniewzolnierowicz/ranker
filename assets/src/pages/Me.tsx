@@ -5,10 +5,10 @@ import { Bold } from '../components/textFormatting/Bold'
 import { H1, H2 } from '../components/textFormatting/Headings'
 import { consts } from '../consts'
 import { RootState } from '../store'
-import { IUserWithEverything } from '../types/user'
+import { IUser } from '../types/user'
 
 export const Me: FC = () => {
-  const userData = useSelector<RootState, IUserWithEverything>(state => state.user.user_data)
+  const userData = useSelector<RootState, IUser>(state => state.user.user_data)
   const { poolSpendUntil, poolSpendStart } = useMemo(() => {
     const poolSpendStart = new Date(userData.pool.year, userData.pool.month - 1)
     const poolSpendUntil = new Date(userData.pool.year, userData.pool.month)
@@ -36,7 +36,7 @@ export const Me: FC = () => {
       </Text>
       <H2>Benefits</H2>
       <Stack>
-        {userData.rewards.map(reward => (
+        {userData.rewards?.map(reward => (
           <Box key={reward.id}>
             {reward.name} (${reward.price})
           </Box>
