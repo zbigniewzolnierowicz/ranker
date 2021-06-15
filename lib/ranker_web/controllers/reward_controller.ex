@@ -6,6 +6,9 @@ defmodule RankerWeb.RewardController do
 
   action_fallback RankerWeb.FallbackController
 
+  plug RankerWeb.Plugs.RequireLogin when action in [:index, :show, :buy_reward]
+  plug :require_owner_of_account when action in [:buy_reward]
+
   def index(conn, _params) do
     rewards = PointTrading.list_rewards()
     render(conn, "index.json", rewards: rewards)
@@ -48,15 +51,43 @@ defmodule RankerWeb.RewardController do
     cond do
       Enum.member?(user.rewards, reward) ->
         conn
-        |> Plug.Conn.put_status(202)
+        |> put_status(202)
         |> render("show.json", user: user)
+      user.spendable_points < reward.price ->
+        conn
+        |> put_status(409)
+        |> put_view(RankerWeb.ErrorView)
+        |> render("409.json", message: "Not enough points.", details: "You do not have enough spending points.")
       true ->
         with {:ok, user} <- PointTrading.buy_reward(user, reward) do
           conn
-          |> Plug.Conn.put_status(201)
+          |> put_status(201)
           |> render("show.json", user: user)
         end
     end
+  end
 
+  def require_owner_of_account(conn, _params) do
+    try do
+      %{params: %{"user_id" => user_id}} = conn
+      user_id = String.to_integer(user_id)
+      current_user_id = conn.assigns[:user_id]
+      if user_id == current_user_id do
+        conn
+      else
+        conn
+        |> put_status(403)
+        |> put_view(RankerWeb.ErrorView)
+        |> render("403.json", message: "You are not the owner of this resouce.", details: "Your user ID must match the user ID in the path.")
+        |> halt()
+      end
+    rescue
+      _e in ArgumentError ->
+        conn
+        |> put_status(403)
+        |> put_view(RankerWeb.ErrorView)
+        |> render("403.json", message: "Incorrect user ID.", details: "User ID must be numerical.")
+        |> halt()
+    end
   end
 end

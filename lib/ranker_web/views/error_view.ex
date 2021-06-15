@@ -26,6 +26,36 @@ defmodule RankerWeb.ErrorView do
     }
   end
 
+  def render("403.json", %{details: details}) do
+    %{
+      status: 403,
+      message: "Forbidden.",
+      details: details
+    }
+  end
+
+  def render("409.json", %{message: message, details: details}) do
+    %{
+      status: 409,
+      message: message,
+      details: details
+    }
+  end
+
+  def render("409.json", %{message: message}) do
+    %{
+      status: 409,
+      message: message
+    }
+  end
+
+  def render("409.json", %{details: details}) do
+    %{
+      status: 409,
+      message: "Conflict with the existing resource.",
+      details: details
+    }
+  end
 
   def template_not_found(template, _assigns) do
     Phoenix.Controller.status_message_from_template(template)

@@ -52,13 +52,15 @@ defmodule RankerWeb.UserController do
 
   def require_owner_of_account(conn, _params) do
     %{params: %{"id" => user_id}} = conn
-    current_user_id = Plug.Conn.get_session(:user_id)
+    current_user_id = conn.assigns[:user_id]
     if user_id == current_user_id do
       conn
     else
       conn
-      |> Plug.Conn.put_status(:forbidden)
-      |> Plug.Conn.halt()
+      |> put_status(403)
+      |> put_view(RankerWeb.ErrorView)
+      |> render("403.json")
+      |> halt()
     end
   end
 end
