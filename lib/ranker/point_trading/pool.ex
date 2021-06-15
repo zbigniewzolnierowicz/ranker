@@ -1,4 +1,4 @@
-defmodule Ranker.Authentication.Pool do
+defmodule Ranker.PointTrading.Pool do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -1,12 +1,12 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
-import { useMemo } from 'react'
+import { Box, Text } from '@chakra-ui/react'
+import { FC, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { Bold } from '../components/textFormatting/Bold'
 import { H1, H2 } from '../components/textFormatting/Headings'
 import { RootState } from '../store'
 import { IUser } from '../types/user'
 
-export const Me = () => {
+export const Me: FC = () => {
     const userData = useSelector<RootState, IUser>(state => state.user.user_data)
     const { poolSpendUntil, poolSpendStart } = useMemo(() => {
         const poolSpendStart = new Date(userData.pool.year, userData.pool.month)

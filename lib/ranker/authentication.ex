@@ -7,6 +7,7 @@ defmodule Ranker.Authentication do
   alias Ranker.Repo
 
   alias Ranker.Authentication.User
+  alias Ranker.PointTrading.Pool
 
   @doc """
   Returns the list of users.
@@ -117,7 +118,7 @@ defmodule Ranker.Authentication do
         |> Ecto.Multi.insert(:pool,
           fn %{user: user} ->
             Ecto.build_assoc(user, :pool)
-            |> Ranker.Authentication.Pool.changeset(%{month: today.month, year: today.year})
+            |> Pool.changeset(%{month: today.month, year: today.year})
           end
         )
         |> Repo.transaction()

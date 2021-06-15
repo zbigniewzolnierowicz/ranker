@@ -2,7 +2,8 @@ defmodule Ranker.Authentication.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Ranker.Authentication.Pool
+  alias Ranker.PointTrading.Pool
+  alias Ranker.PointTrading.Reward
 
   schema "users" do
     field :email, :string
@@ -12,6 +13,7 @@ defmodule Ranker.Authentication.User do
     field :spendable_points, :integer
 
     has_one :pool, Pool
+    many_to_many :rewards, Reward, join_through: "user_rewards"
 
     timestamps()
   end
