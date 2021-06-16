@@ -24,7 +24,7 @@ defmodule RankerWeb.UserController do
         true ->
           Authentication.get_user!(id)
         end
-      render(conn, "show.json", user: user)
+      render(conn, "show.json", user: user, private: user_id == conn.assigns[:user_id])
     rescue
       _e in ArgumentError ->
         conn
@@ -72,10 +72,10 @@ defmodule RankerWeb.UserController do
           |> render("409.json", message: "Not enough points.", details: "You do not have enough points to send to this user.")
         true ->
           case Authentication.send_points_to_user(user, recipient_user, amount) do
-            {:ok, %{pool: pool, user: recipient_user}} ->
+            {:ok, %{pool: pool, user: _recipient}} ->
               conn
               |> put_status(202)
-              |> render("update_points.json", sender: %User{user | pool: pool}, recipient: recipient_user)
+              |> render("show.json", user: %User{user | pool: pool}, private: false)
             true ->
               conn
               |> put_status(500)
