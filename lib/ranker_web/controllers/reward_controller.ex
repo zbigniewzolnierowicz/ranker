@@ -76,17 +76,17 @@ defmodule RankerWeb.RewardController do
         conn
       else
         conn
-        |> put_status(403)
+        |> put_status(401)
         |> put_view(RankerWeb.ErrorView)
-        |> render("403.json", message: "You are not the owner of this resouce.", details: "Your user ID must match the user ID in the path.")
+        |> render("401.json", message: "You are not the owner of this resouce.", details: "Your user ID must match the user ID in the path.")
         |> halt()
       end
     rescue
       _e in ArgumentError ->
         conn
-        |> put_status(403)
+        |> put_status(400)
         |> put_view(RankerWeb.ErrorView)
-        |> render("403.json", message: "Incorrect user ID.", details: "User ID must be numerical.")
+        |> render("400.json", message: "Incorrect user ID.", details: "User ID must be numerical.")
         |> halt()
     end
   end

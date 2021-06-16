@@ -10,9 +10,9 @@ defmodule RankerWeb.Plugs.RequireLogin do
       conn
     else
       conn
-      |> put_status(403)
+      |> put_status(401)
       |> put_view(RankerWeb.ErrorView)
-      |> render("403.json")
+      |> render("401.json")
       |> halt()
     end
   end

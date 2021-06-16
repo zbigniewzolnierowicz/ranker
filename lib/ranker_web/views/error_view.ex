@@ -34,6 +34,43 @@ defmodule RankerWeb.ErrorView do
     }
   end
 
+  def render("403.json", _params) do
+    %{
+      status: 403,
+      message: "Forbidden.",
+    }
+  end
+
+  def render("401.json", %{message: message, details: details}) do
+    %{
+      status: 401,
+      message: message,
+      details: details
+    }
+  end
+
+  def render("401.json", %{message: message}) do
+    %{
+      status: 401,
+      message: message
+    }
+  end
+
+  def render("401.json", %{details: details}) do
+    %{
+      status: 401,
+      message: "Unauthorized.",
+      details: details
+    }
+  end
+
+  def render("401.json", _params) do
+    %{
+      status: 401,
+      message: "Unauthorized.",
+    }
+  end
+
   def render("409.json", %{message: message, details: details}) do
     %{
       status: 409,
@@ -54,6 +91,43 @@ defmodule RankerWeb.ErrorView do
       status: 409,
       message: "Conflict with the existing resource.",
       details: details
+    }
+  end
+
+  def render("409.json", _params) do
+    %{
+      status: 409,
+      message: "Conflict with the existing resource.",
+    }
+  end
+
+  def render("400.json", %{message: message, details: details}) do
+    %{
+      status: 400,
+      message: message,
+      details: details
+    }
+  end
+
+  def render("400.json", %{message: message}) do
+    %{
+      status: 400,
+      message: message
+    }
+  end
+
+  def render("400.json", %{details: details}) do
+    %{
+      status: 400,
+      message: "Bad request.",
+      details: details
+    }
+  end
+
+  def render("400.json", _params) do
+    %{
+      status: 400,
+      message: "Bad request.",
     }
   end
 

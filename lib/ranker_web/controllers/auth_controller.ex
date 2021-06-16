@@ -7,7 +7,6 @@ defmodule RankerWeb.AuthController do
   action_fallback RankerWeb.FallbackController
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, %{"provider" => provider}) do
-    IO.inspect(auth.info)
     %Ueberauth.Auth.Info{email: email, name: name} = auth.info
     params = %{email: email, name: name, provider: provider, token: auth.credentials.token}
     case Authentication.upsert_user(params) do
