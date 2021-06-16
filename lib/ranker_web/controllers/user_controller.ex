@@ -24,7 +24,7 @@ defmodule RankerWeb.UserController do
         true ->
           Authentication.get_user!(id)
         end
-      render(conn, "show.json", user: user, private: user_id == conn.assigns[:user_id])
+      render(conn, "show.json", user: user, private: user_id != conn.assigns[:user_id])
     rescue
       _e in ArgumentError ->
         conn
@@ -50,11 +50,18 @@ defmodule RankerWeb.UserController do
     end
   end
 
+  defp convert_string_to_integer(possible_integer) do
+    cond do
+      is_bitstring(possible_integer) -> String.to_integer(possible_integer)
+      is_integer(possible_integer) -> possible_integer
+    end
+  end
+
   def send_money(conn, %{"id" => id, "send_to" => send_to_id, "amount" => amount}) do
     try do
-      id = String.to_integer(id)
-      send_to_id = String.to_integer(send_to_id)
-      amount = String.to_integer(amount)
+      id = convert_string_to_integer(id)
+      send_to_id = convert_string_to_integer(send_to_id)
+      amount = convert_string_to_integer(amount)
       if (id == send_to_id) do
         conn
         |> put_status(403)

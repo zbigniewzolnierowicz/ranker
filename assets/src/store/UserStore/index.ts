@@ -16,6 +16,7 @@ export enum EUserPayloadlessActions {
 
 export enum EUserPayloadActions {
   LOG_USER_IN = 'LOG_USER_IN',
+  UPDATE_POINTS = 'UPDATE_POINTS',
 }
 
 export type UserActions = PayloadAction<IUser, EUserPayloadActions> | Action<EUserPayloadlessActions>
@@ -33,6 +34,17 @@ export const LoggedInUserReducer = (state = initialState, action: UserActions): 
         ...state,
         user_data: undefined,
         logged_in: false,
+      }
+    case EUserPayloadActions.UPDATE_POINTS:
+      return {
+        ...state,
+        user_data: {
+          ...state.user_data,
+          pool: {
+            ...state.user_data.pool,
+            points: action.payload.pool.points,
+          },
+        },
       }
     default:
       return state

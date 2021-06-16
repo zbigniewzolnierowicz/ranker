@@ -8,6 +8,7 @@ import { EUserPayloadActions, EUserPayloadlessActions } from './store/UserStore'
 import { IUser } from './types/user'
 import { client } from './utils/client'
 import Home from './pages/Home'
+import Users from './pages/Users'
 
 const Me = lazy(() => import('./pages/Me'))
 const Shop = lazy(() => import('./pages/Shop'))
@@ -37,8 +38,8 @@ export const App: FC = () => {
           <Switch>
             <Route path="/me">{loggedIn ? <Me /> : <Redirect to="/" />}</Route>
             <Route path="/shop">{loggedIn ? <Shop /> : <Redirect to="/" />}</Route>
-            <Route path="/">
-              <Home />
+            <Route exact path="/">
+              {loggedIn ? <Users /> : <Home />}
             </Route>
           </Switch>
         </Suspense>

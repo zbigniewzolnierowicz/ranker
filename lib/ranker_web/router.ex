@@ -22,9 +22,9 @@ defmodule RankerWeb.Router do
     pipe_through :api
 
     resources "/users", UserController, except: [:new, :edit, :create]
-    get "/users/:id/send/:send_to", UserController, :send_money
+    post "/users/:id/send/:send_to", UserController, :send_money
     resources "/rewards", RewardController, except: [:new, :edit]
-    get "/users/:user_id/reward/:reward_id", RewardController, :buy_reward
+    post "/users/:user_id/reward/:reward_id", RewardController, :buy_reward
   end
 
   scope "/auth", RankerWeb do
