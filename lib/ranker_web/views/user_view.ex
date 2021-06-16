@@ -14,6 +14,10 @@ defmodule RankerWeb.UserView do
     render_one(user, UserView, "user.json")
   end
 
+  def render("update_points.json", %{users: [%User{}, %User{}] = users}) do
+    render_many(users, UserView, "user.json")
+  end
+
   def render("user.json", %{user: %User{pool: %Ecto.Association.NotLoaded{}, rewards: [%Reward{}]} = user}) do
     %{id: user.id,
       name: user.name,

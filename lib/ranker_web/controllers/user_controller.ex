@@ -71,8 +71,17 @@ defmodule RankerWeb.UserController do
           |> put_view(RankerWeb.ErrorView)
           |> render("409.json", message: "Not enough points.", details: "You do not have enough points to send to this user.")
         true ->
-          conn
-          |> render("index.json", users: [user, recipient_user])
+          case Authentication.send_points_to_user(user, recipient_user, amount) do
+            {:ok, %{pool: pool, user: recipient_user}} ->
+              conn
+              |> put_status(202)
+              |> render("update_points.json", users: [%User{user | pool: pool}, recipient_user])
+            true ->
+              conn
+              |> put_status(500)
+              |> put_view(RankerWeb.ErrorView)
+              |> render("500.json", message: "An error occured while writing the changes to a database")
+          end
       end
     rescue
       _e in ArgumentError ->

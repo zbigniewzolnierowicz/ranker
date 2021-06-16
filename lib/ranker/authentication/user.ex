@@ -45,4 +45,11 @@ defmodule Ranker.Authentication.User do
     |> cast_assoc(:rewards)
     |> validate_required([:spendable_points, :rewards])
   end
+
+  def changeset_update_points(%User{} = user, _attrs) do
+    user
+    |> change()
+    |> cast_assoc(:pool)
+    |> validate_required([:pool])
+  end
 end

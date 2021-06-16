@@ -143,4 +143,11 @@ defmodule Ranker.Authentication do
         {:ok, %{user: user}}
     end
   end
+
+  def send_points_to_user(%User{pool: %Pool{} = pool}, %User{} = to, amount) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.update(:pool, Pool.changeset(pool, %{points: pool.points - amount}))
+    |> Ecto.Multi.update(:user, User.changeset(to, %{spendable_points: to.spendable_points + amount}))
+    |> Repo.transaction()
+  end
 end
