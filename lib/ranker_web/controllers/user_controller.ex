@@ -75,7 +75,7 @@ defmodule RankerWeb.UserController do
             {:ok, %{pool: pool, user: recipient_user}} ->
               conn
               |> put_status(202)
-              |> render("update_points.json", users: [%User{user | pool: pool}, recipient_user])
+              |> render("update_points.json", sender: %User{user | pool: pool}, recipient: recipient_user)
             true ->
               conn
               |> put_status(500)
