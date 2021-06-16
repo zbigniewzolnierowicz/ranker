@@ -32,7 +32,7 @@ defmodule RankerWeb.UserView do
       pool: render_one(user.pool, RankerWeb.PoolView, "pool.json")}
   end
 
-  def render("user.json", %{user: %User{pool: %Pool{} = pool, rewards: [%Reward{}] = rewards} = user}) do
+  def render("user.json", %{user: %User{pool: %Pool{} = pool, rewards: rewards} = user}) do
     %{id: user.id,
       name: user.name,
       email: user.email,

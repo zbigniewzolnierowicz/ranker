@@ -7,7 +7,7 @@ import { consts } from '../consts'
 import { RootState } from '../store'
 import { IUser } from '../types/user'
 
-export const Me: FC = () => {
+const Me: FC = () => {
   const userData = useSelector<RootState, IUser>(state => state.user.user_data)
   const { poolSpendUntil, poolSpendStart } = useMemo(() => {
     const poolSpendStart = new Date(userData.pool.year, userData.pool.month - 1)
@@ -45,3 +45,5 @@ export const Me: FC = () => {
     </Box>
   )
 }
+
+export default Me

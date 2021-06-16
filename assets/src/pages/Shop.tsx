@@ -7,7 +7,7 @@ import { ERewardStorePayloadActions, ERewardStorePayloadlessActions, IRewardStor
 import type { IReward } from '../types/reward'
 import { client } from '../utils/client'
 
-export const Shop: FC = () => {
+const Shop: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const loggedIn = useSelector<RootState, boolean>(state => state.user.logged_in)
   const { loading, rewards } = useSelector<RootState, IRewardStoreState>(state => state.store)
@@ -30,3 +30,5 @@ export const Shop: FC = () => {
     </Box>
   )
 }
+
+export default Shop

@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, lazy, Suspense, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Cookies from 'universal-cookie/es6'
@@ -7,10 +7,10 @@ import { AppDispatch, RootState } from './store'
 import { EUserPayloadActions, EUserPayloadlessActions } from './store/UserStore'
 import { IUser } from './types/user'
 import { client } from './utils/client'
+import Home from './pages/Home'
 
-import { Me } from './pages/Me'
-import { Home } from './pages/Home'
-import { Shop } from './pages/Shop'
+const Me = lazy(() => import('./pages/Me'))
+const Shop = lazy(() => import('./pages/Shop'))
 
 export const App: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,13 +33,15 @@ export const App: FC = () => {
     <Router>
       <div>
         <Header />
-        <Switch>
-          <Route path="/me">{loggedIn ? <Me /> : <Redirect to="/" />}</Route>
-          <Route path="/shop">{loggedIn ? <Shop /> : <Redirect to="/" />}</Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Switch>
+            <Route path="/me">{loggedIn ? <Me /> : <Redirect to="/" />}</Route>
+            <Route path="/shop">{loggedIn ? <Shop /> : <Redirect to="/" />}</Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Suspense>
       </div>
     </Router>
   )

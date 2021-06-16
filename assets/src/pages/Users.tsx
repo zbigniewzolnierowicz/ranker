@@ -1,3 +1,5 @@
 import { FC } from 'react'
 
-export const Users: FC = () => <div>Users</div>
+const Users: FC = () => <div>Users</div>
+
+export default Users
