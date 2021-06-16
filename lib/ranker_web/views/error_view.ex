@@ -17,6 +17,21 @@ defmodule RankerWeb.ErrorView do
     }
   end
 
+  def render("404.json", %{details: details}) do
+    %{
+      status: 404,
+      message: "Not found.",
+      details: details
+    }
+  end
+
+  def render("404.json", _params) do
+    %{
+      status: 404,
+      message: "Not found.",
+    }
+  end
+
   def render("403.json", %{details: details}) do
     %{
       status: 403,

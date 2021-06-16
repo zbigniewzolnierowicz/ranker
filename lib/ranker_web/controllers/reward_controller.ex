@@ -45,8 +45,26 @@ defmodule RankerWeb.RewardController do
   end
 
   def buy_reward(conn, %{"user_id" => user_id, "reward_id" => reward_id}) do
-    reward = PointTrading.get_reward!(reward_id)
-    user = Ranker.Authentication.get_user_with_rewards!(user_id)
+    reward =
+      try do
+        PointTrading.get_reward!(reward_id)
+      rescue
+        _e in Ecto.NoResultsError ->
+          conn
+          |> put_status(404)
+          |> put_view(RankerWeb.ErrorView)
+          |> render("404.json", message: "Reward not found.", details: "A reward with this ID does not exist.")
+      end
+    user =
+      try do
+        Ranker.Authentication.get_user_with_rewards!(user_id)
+      rescue
+        _e in Ecto.NoResultsError ->
+          conn
+          |> put_status(404)
+          |> put_view(RankerWeb.ErrorView)
+          |> render("404.json", message: "User not found.", details: "A user with this ID does not exist.")
+      end
     conn = Phoenix.Controller.put_view(conn, RankerWeb.UserView)
     cond do
       Enum.member?(user.rewards, reward) ->
